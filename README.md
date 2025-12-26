@@ -1,5 +1,7 @@
 Sistema para escolher em uma lista de ativos qual o melhor premio para venda de put
 
+- O usuario pode escolher a data, a distancia do preco atual e a lista de ativos para ser analisado
+
 *Tabela Gerada para uma data especifica de interesse do usuaraio*
 
  | Ativo   | Opção   | Strike   | Preço Atual   | Prêmio Unit.   |   Qtd | Total Prêmio   |
