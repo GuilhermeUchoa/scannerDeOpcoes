@@ -1,6 +1,7 @@
 import requests
 import yfinance as yf
 import pandas as pd # Opcional: para visualizar melhor no final
+import datetime
 
 def buscar_venda_put(ativo, data_vencimento, valor_investido=12000, distancia_strike=0.80):
     # Configuração de conexão (Headers e Cookies do seu navegador)
@@ -28,7 +29,7 @@ def buscar_venda_put(ativo, data_vencimento, valor_investido=12000, distancia_st
     
     # A dataReferencia no site costuma ser o dia atual ou último fechamento
     # Se der erro de "success: false", tente fixar uma data de pregão recente aqui
-    params = {'idAcao': ativo, 'dataReferencia': '2025-12-26'} 
+    params = {'idAcao': ativo, 'dataReferencia': datetime.datetime.now().strftime('%Y-%m-%d')} 
 
     try:
         url = 'https://opcoes.net.br/listaopcoes/todas'
