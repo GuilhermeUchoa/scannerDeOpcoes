@@ -72,11 +72,11 @@ def buscar_venda_put(ativo, data_vencimento, valor_investido=12000, distancia_st
         return {
             "Ativo": ativo,
             "Opção": dados_op[0],
-            "Strike": strike_escolhido,
-            "Preço Atual": preco_atual,
-            "Prêmio Unit.": premio,
+            "Strike": f"R$ {strike_escolhido}",
+            "Preço Atual": f"R$ {preco_atual}",
+            "Prêmio Unit.": f"R$ {premio}",
             "Qtd": qnt_lote,
-            "Total Prêmio": round(qnt_lote * premio, 2)
+            "Total Prêmio": f"R$ {round(qnt_lote * premio, 2)}"
         }
 
     except Exception as e:

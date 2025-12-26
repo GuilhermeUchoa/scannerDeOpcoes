@@ -17,8 +17,9 @@ def main():
         else:
             print(f"❌ {i}: Sem dados para esta data.")
 
-    # Exibir em tabela
+    # DataFrame
     df = pd.DataFrame(resultados)
+    df = df.to_markdown(index=False)
     print("\n", df)
 
 if __name__ == "__main__":
