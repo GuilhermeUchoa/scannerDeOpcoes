@@ -18,7 +18,7 @@ def main():
             print(f"❌ {i}: Sem dados para esta data.")
 
     # DataFrame
-    df = pd.DataFrame(resultados)
+    df = pd.DataFrame(resultados).sort_values(by='Total Prêmio',ascending=False)
     df = df.to_markdown(index=False)
     print("\n", df)
 
