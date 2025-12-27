@@ -56,6 +56,7 @@ def buscar_venda_put(ativo, data_vencimento, valor_investido=12000, distancia_st
         # Converte strikes para float e acha o mais próximo do alvo
         strikes_float = [float(s.replace(',', '.')) for s in strikes_dict.keys()]
         strike_escolhido = min(strikes_float, key=lambda x: abs(x - alvo))
+       
         
         # Recupera os dados usando a chave original (string com vírgula)
         chave_original = str(strike_escolhido).replace('.', ',')
@@ -67,7 +68,7 @@ def buscar_venda_put(ativo, data_vencimento, valor_investido=12000, distancia_st
         if not dados_op: return None
 
         premio = float(dados_op[3].replace(',', '.')) if dados_op[3] else 0.0
-        qnt_lote = int((valor_investido / preco_atual) // 100) * 100
+        qnt_lote = int((valor_investido / strike_escolhido) // 100) * 100
 
         return {
             "Ativo": ativo,
@@ -76,7 +77,8 @@ def buscar_venda_put(ativo, data_vencimento, valor_investido=12000, distancia_st
             "Preço Atual": f"R$ {preco_atual}",
             "Prêmio Unit.": f"R$ {premio}",
             "Qtd": qnt_lote,
-            "Total Prêmio": f"R$ {round(qnt_lote * premio, 2)}"
+            "Rentabilidade":round((qnt_lote * premio/(qnt_lote*strike_escolhido))*100,2),
+            "Total Prêmio": round(qnt_lote * premio, 2)
         }
 
     except Exception as e:
