@@ -1,6 +1,5 @@
 def main():
-   import carteira
-   import scanner
+   pass
 
 
 if __name__ == "__main__":

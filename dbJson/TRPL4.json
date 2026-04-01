@@ -1,0 +1,173 @@
+{
+  "asset": {
+    "symbol": "TRPL4",
+    "name": "TRAN PAULISTPN",
+    "open": 24.15,
+    "high": 24.47,
+    "low": 24.1,
+    "close": 24.2,
+    "variation": 0.2,
+    "volume": 1940600,
+    "financial_volume": 47133725,
+    "bid": 0,
+    "ask": 0,
+    "bid_volume": 0,
+    "ask_volume": 0,
+    "time": "2024-11-15T10:18:44.814Z",
+    "last_trade_at": "2023-02-03T21:07:34.362Z",
+    "contract_size": 100,
+    "short_term_trend": 0,
+    "middle_term_trend": 0,
+    "stdv_1y": 0.014078184731015079,
+    "ewma_current": 19.47,
+    "iv_current": 15.32,
+    "beta_ibov": 0.012308065650965759
+  },
+  "series": [
+    {
+      "due_date": "2026-03-20",
+      "days_to_maturity": 4,
+      "call": "C",
+      "put": "O",
+      "strikes": [
+        {
+          "strike": 19,
+          "call": {
+            "symbol": "TRPLC190",
+            "open": 0,
+            "high": 0,
+            "low": 0,
+            "close": 7.5,
+            "bid": 0,
+            "ask": 0,
+            "volume": 0,
+            "financial_volume": 0,
+            "variation": 0,
+            "maturity_type": "EUROPEAN",
+            "contract_size": 100,
+            "market_maker": false,
+            "time": "2026-03-16T21:57:09.000Z",
+            "category": "CALL",
+            "strike": 19,
+            "bs": {
+              "moneyness": "ITM",
+              "price": 5.2449,
+              "delta": 1,
+              "gamma": 0,
+              "vega": 0,
+              "theta": -0.011207588803572277,
+              "rho": 0.003008745663351269,
+              "volatility": 411.151,
+              "poe": 100
+            }
+          },
+          "put": {
+            "symbol": "TRPLO190",
+            "open": 0,
+            "high": 0,
+            "low": 0,
+            "close": 0.12,
+            "bid": 0,
+            "ask": 0,
+            "volume": 0,
+            "financial_volume": 0,
+            "variation": 0,
+            "maturity_type": "EUROPEAN",
+            "contract_size": 100,
+            "market_maker": false,
+            "time": "2026-03-16T21:45:00.000Z",
+            "category": "PUT",
+            "strike": 19,
+            "bs": {
+              "moneyness": "OTM",
+              "price": 0,
+              "delta": 0,
+              "gamma": 0,
+              "vega": 0,
+              "theta": 0,
+              "rho": 0,
+              "volatility": 134.227,
+              "poe": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "due_date": "2026-06-19",
+      "days_to_maturity": 65,
+      "call": "F",
+      "put": "R",
+      "strikes": [
+        {
+          "strike": 60,
+          "call": {
+            "symbol": "TRPLF600",
+            "open": 0,
+            "high": 0,
+            "low": 0,
+            "close": 0.03,
+            "bid": 0,
+            "ask": 0,
+            "volume": 0,
+            "financial_volume": 0,
+            "variation": 0,
+            "maturity_type": "EUROPEAN",
+            "contract_size": 100,
+            "market_maker": false,
+            "time": "2026-03-16T21:57:09.000Z",
+            "category": "CALL",
+            "strike": 60,
+            "bs": {
+              "moneyness": "OTM",
+              "price": 0,
+              "delta": 0,
+              "gamma": 0,
+              "vega": 0,
+              "theta": 0,
+              "rho": 0,
+              "volatility": 69.721,
+              "poe": 0
+            }
+          },
+          "put": {
+            "symbol": "TRPLR600",
+            "open": 0,
+            "high": 0,
+            "low": 0,
+            "close": 0,
+            "bid": 0,
+            "ask": 0,
+            "volume": 0,
+            "financial_volume": 0,
+            "variation": 0,
+            "maturity_type": "EUROPEAN",
+            "contract_size": 100,
+            "market_maker": false,
+            "time": "2026-03-16T21:57:09.000Z",
+            "category": "PUT",
+            "strike": 60,
+            "bs": {
+              "moneyness": "ITM",
+              "price": 33.5378,
+              "delta": -1,
+              "gamma": 0,
+              "vega": 0,
+              "theta": 0.034138615660962664,
+              "rho": -0.14892713094972587,
+              "volatility": 0,
+              "poe": 100
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "ts": "16/03/2026, 19:35:31",
+  "tsMs": 1773689731000,
+  "v": "2-storage",
+  "expiresIn": 52469000,
+  "expiresAt": "17/03/2026, 10:10:00",
+  "stale": false,
+  "age": 127
+}

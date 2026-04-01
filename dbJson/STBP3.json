@@ -1,0 +1,863 @@
+{
+  "asset": {
+    "symbol": "STBP3",
+    "name": "SANTOS BRP ON",
+    "open": 0,
+    "high": 0,
+    "low": 0,
+    "close": 0,
+    "variation": 0,
+    "volume": 0,
+    "financial_volume": 0,
+    "bid": 0,
+    "ask": 0,
+    "bid_volume": 0,
+    "ask_volume": 0,
+    "time": "2025-10-04T14:12:57.926Z",
+    "last_trade_at": "2023-02-03T21:07:45.183Z",
+    "contract_size": 100,
+    "short_term_trend": -1,
+    "middle_term_trend": -1,
+    "stdv_1y": 0.0027055642868398953,
+    "ewma_current": 3.62,
+    "iv_current": 0,
+    "beta_ibov": -0.026044635183668143
+  },
+  "series": [
+    {
+      "due_date": "2026-03-20",
+      "days_to_maturity": 4,
+      "call": "C",
+      "put": "O",
+      "strikes": [
+        {
+          "strike": 12.73,
+          "call": {
+            "symbol": "STBPC13",
+            "open": 0,
+            "high": 0,
+            "low": 0,
+            "close": 0,
+            "bid": 0,
+            "ask": 0,
+            "volume": 0,
+            "financial_volume": 0,
+            "variation": 0,
+            "maturity_type": "AMERICAN",
+            "contract_size": 100,
+            "market_maker": false,
+            "time": "2026-03-16T20:30:00.000Z",
+            "category": "CALL",
+            "strike": 12.73,
+            "bs": {
+              "moneyness": "OTM",
+              "price": 0,
+              "delta": 0,
+              "gamma": 0,
+              "vega": 0,
+              "theta": 0,
+              "rho": 0,
+              "volatility": 0,
+              "poe": 0
+            }
+          },
+          "put": {
+            "symbol": "STBPO13",
+            "open": 0,
+            "high": 0,
+            "low": 0,
+            "close": 0,
+            "bid": 0,
+            "ask": 0,
+            "volume": 0,
+            "financial_volume": 0,
+            "variation": 0,
+            "maturity_type": "EUROPEAN",
+            "contract_size": 100,
+            "market_maker": false,
+            "time": "2026-03-16T20:30:00.000Z",
+            "category": "PUT",
+            "strike": 12.73,
+            "bs": {
+              "moneyness": "ITM",
+              "price": 12.6999,
+              "delta": -1,
+              "gamma": 0,
+              "vega": 0,
+              "theta": 0.007509084498393426,
+              "rho": -0.00201585959444535,
+              "volatility": 0,
+              "poe": 100
+            }
+          }
+        }
+      ]
+    },
+    {
+      "due_date": "2026-04-17",
+      "days_to_maturity": 23,
+      "call": "D",
+      "put": "P",
+      "strikes": [
+        {
+          "strike": 12.73,
+          "call": {
+            "symbol": "STBPD13",
+            "open": 0,
+            "high": 0,
+            "low": 0,
+            "close": 0,
+            "bid": 0,
+            "ask": 0,
+            "volume": 0,
+            "financial_volume": 0,
+            "variation": 0,
+            "maturity_type": "AMERICAN",
+            "contract_size": 100,
+            "market_maker": false,
+            "time": "2026-03-16T20:30:00.000Z",
+            "category": "CALL",
+            "strike": 12.73,
+            "bs": {
+              "moneyness": "OTM",
+              "price": 0,
+              "delta": 0,
+              "gamma": 0,
+              "vega": 0,
+              "theta": 0,
+              "rho": 0,
+              "volatility": 0,
+              "poe": 0
+            }
+          },
+          "put": {
+            "symbol": "STBPP13",
+            "open": 0,
+            "high": 0,
+            "low": 0,
+            "close": 0,
+            "bid": 0,
+            "ask": 0,
+            "volume": 0,
+            "financial_volume": 0,
+            "variation": 0,
+            "maturity_type": "EUROPEAN",
+            "contract_size": 100,
+            "market_maker": false,
+            "time": "2026-03-16T20:30:00.000Z",
+            "category": "PUT",
+            "strike": 12.73,
+            "bs": {
+              "moneyness": "ITM",
+              "price": 12.5581,
+              "delta": -1,
+              "gamma": 0,
+              "vega": 0,
+              "theta": 0.007425198371285677,
+              "rho": -0.011461735540101034,
+              "volatility": 0,
+              "poe": 100
+            }
+          }
+        }
+      ]
+    },
+    {
+      "due_date": "2026-05-15",
+      "days_to_maturity": 41,
+      "call": "E",
+      "put": "Q",
+      "strikes": [
+        {
+          "strike": 12.73,
+          "call": {
+            "symbol": "STBPE130",
+            "open": 0,
+            "high": 0,
+            "low": 0,
+            "close": 0.55,
+            "bid": 0,
+            "ask": 0,
+            "volume": 0,
+            "financial_volume": 0,
+            "variation": 0,
+            "maturity_type": "AMERICAN",
+            "contract_size": 100,
+            "market_maker": false,
+            "time": "2026-03-16T20:30:00.000Z",
+            "category": "CALL",
+            "strike": 12.73,
+            "bs": {
+              "moneyness": "OTM",
+              "price": 0,
+              "delta": 0,
+              "gamma": 0,
+              "vega": 0,
+              "theta": 0,
+              "rho": 0,
+              "volatility": null,
+              "poe": 0
+            }
+          },
+          "put": {
+            "symbol": "STBPQ130",
+            "open": 0,
+            "high": 0,
+            "low": 0,
+            "close": 0.15,
+            "bid": 0,
+            "ask": 0,
+            "volume": 0,
+            "financial_volume": 0,
+            "variation": 0,
+            "maturity_type": "EUROPEAN",
+            "contract_size": 100,
+            "market_maker": false,
+            "time": "2026-03-16T20:30:00.000Z",
+            "category": "PUT",
+            "strike": 12.73,
+            "bs": {
+              "moneyness": "ITM",
+              "price": 12.4251,
+              "delta": -1,
+              "gamma": 0,
+              "vega": 0,
+              "theta": 0.007346592710986876,
+              "rho": -0.020215405174820136,
+              "volatility": null,
+              "poe": 100
+            }
+          }
+        }
+      ]
+    },
+    {
+      "due_date": "2026-06-19",
+      "days_to_maturity": 65,
+      "call": "F",
+      "put": "R",
+      "strikes": [
+        {
+          "strike": 12.73,
+          "call": {
+            "symbol": "STBPF13",
+            "open": 0,
+            "high": 0,
+            "low": 0,
+            "close": 0,
+            "bid": 0,
+            "ask": 0,
+            "volume": 0,
+            "financial_volume": 0,
+            "variation": 0,
+            "maturity_type": "AMERICAN",
+            "contract_size": 100,
+            "market_maker": false,
+            "time": "2026-03-16T20:30:00.000Z",
+            "category": "CALL",
+            "strike": 12.73,
+            "bs": {
+              "moneyness": "OTM",
+              "price": 0,
+              "delta": 0,
+              "gamma": 0,
+              "vega": 0,
+              "theta": 0,
+              "rho": 0,
+              "volatility": 0,
+              "poe": 0
+            }
+          },
+          "put": {
+            "symbol": "STBPR13",
+            "open": 0,
+            "high": 0,
+            "low": 0,
+            "close": 0,
+            "bid": 0,
+            "ask": 0,
+            "volume": 0,
+            "financial_volume": 0,
+            "variation": 0,
+            "maturity_type": "EUROPEAN",
+            "contract_size": 100,
+            "market_maker": false,
+            "time": "2026-03-16T20:30:00.000Z",
+            "category": "PUT",
+            "strike": 12.73,
+            "bs": {
+              "moneyness": "ITM",
+              "price": 12.25,
+              "delta": -1,
+              "gamma": 0,
+              "vega": 0,
+              "theta": 0.007243076289400912,
+              "rho": -0.03159737294983351,
+              "volatility": 0,
+              "poe": 100
+            }
+          }
+        }
+      ]
+    },
+    {
+      "due_date": "2026-07-17",
+      "days_to_maturity": 85,
+      "call": "G",
+      "put": "S",
+      "strikes": [
+        {
+          "strike": 12.73,
+          "call": {
+            "symbol": "STBPG13",
+            "open": 0,
+            "high": 0,
+            "low": 0,
+            "close": 0,
+            "bid": 0,
+            "ask": 0,
+            "volume": 0,
+            "financial_volume": 0,
+            "variation": 0,
+            "maturity_type": "AMERICAN",
+            "contract_size": 100,
+            "market_maker": false,
+            "time": "2026-03-16T20:30:00.000Z",
+            "category": "CALL",
+            "strike": 12.73,
+            "bs": {
+              "moneyness": "OTM",
+              "price": 0,
+              "delta": 0,
+              "gamma": 0,
+              "vega": 0,
+              "theta": 0,
+              "rho": 0,
+              "volatility": 0,
+              "poe": 0
+            }
+          },
+          "put": {
+            "symbol": "STBPS13",
+            "open": 0,
+            "high": 0,
+            "low": 0,
+            "close": 0,
+            "bid": 0,
+            "ask": 0,
+            "volume": 0,
+            "financial_volume": 0,
+            "variation": 0,
+            "maturity_type": "EUROPEAN",
+            "contract_size": 100,
+            "market_maker": false,
+            "time": "2026-03-16T20:30:00.000Z",
+            "category": "PUT",
+            "strike": 12.73,
+            "bs": {
+              "moneyness": "ITM",
+              "price": 12.106,
+              "delta": -1,
+              "gamma": 0,
+              "vega": 0,
+              "theta": 0.007157928568237244,
+              "rho": -0.0408338706526669,
+              "volatility": 0,
+              "poe": 100
+            }
+          }
+        }
+      ]
+    },
+    {
+      "due_date": "2026-08-21",
+      "days_to_maturity": 110,
+      "call": "H",
+      "put": "T",
+      "strikes": [
+        {
+          "strike": 12.73,
+          "call": {
+            "symbol": "STBPH13",
+            "open": 0,
+            "high": 0,
+            "low": 0,
+            "close": 0,
+            "bid": 0,
+            "ask": 0,
+            "volume": 0,
+            "financial_volume": 0,
+            "variation": 0,
+            "maturity_type": "AMERICAN",
+            "contract_size": 100,
+            "market_maker": false,
+            "time": "2026-03-16T20:30:00.000Z",
+            "category": "CALL",
+            "strike": 12.73,
+            "bs": {
+              "moneyness": "OTM",
+              "price": 0,
+              "delta": 0,
+              "gamma": 0,
+              "vega": 0,
+              "theta": 0,
+              "rho": 0,
+              "volatility": 0,
+              "poe": 0
+            }
+          },
+          "put": {
+            "symbol": "STBPT13",
+            "open": 0,
+            "high": 0,
+            "low": 0,
+            "close": 0,
+            "bid": 0,
+            "ask": 0,
+            "volume": 0,
+            "financial_volume": 0,
+            "variation": 0,
+            "maturity_type": "EUROPEAN",
+            "contract_size": 100,
+            "market_maker": false,
+            "time": "2026-03-16T20:30:00.000Z",
+            "category": "PUT",
+            "strike": 12.73,
+            "bs": {
+              "moneyness": "ITM",
+              "price": 11.9284,
+              "delta": -1,
+              "gamma": 0,
+              "vega": 0,
+              "theta": 0.007052900417825372,
+              "rho": -0.05206839991994616,
+              "volatility": 0,
+              "poe": 100
+            }
+          }
+        }
+      ]
+    },
+    {
+      "due_date": "2026-09-18",
+      "days_to_maturity": 129,
+      "call": "I",
+      "put": "U",
+      "strikes": [
+        {
+          "strike": 12.73,
+          "call": {
+            "symbol": "STBPI13",
+            "open": 0,
+            "high": 0,
+            "low": 0,
+            "close": 0,
+            "bid": 0,
+            "ask": 0,
+            "volume": 0,
+            "financial_volume": 0,
+            "variation": 0,
+            "maturity_type": "AMERICAN",
+            "contract_size": 100,
+            "market_maker": false,
+            "time": "2026-03-16T20:30:00.000Z",
+            "category": "CALL",
+            "strike": 12.73,
+            "bs": {
+              "moneyness": "OTM",
+              "price": 0,
+              "delta": 0,
+              "gamma": 0,
+              "vega": 0,
+              "theta": 0,
+              "rho": 0,
+              "volatility": 0,
+              "poe": 0
+            }
+          },
+          "put": {
+            "symbol": "STBPU13",
+            "open": 0,
+            "high": 0,
+            "low": 0,
+            "close": 0,
+            "bid": 0,
+            "ask": 0,
+            "volume": 0,
+            "financial_volume": 0,
+            "variation": 0,
+            "maturity_type": "EUROPEAN",
+            "contract_size": 100,
+            "market_maker": false,
+            "time": "2026-03-16T20:30:00.000Z",
+            "category": "PUT",
+            "strike": 12.73,
+            "bs": {
+              "moneyness": "ITM",
+              "price": 11.7951,
+              "delta": -1,
+              "gamma": 0,
+              "vega": 0,
+              "theta": 0.006974110453342407,
+              "rho": -0.060379910532066976,
+              "volatility": 0,
+              "poe": 100
+            }
+          }
+        }
+      ]
+    },
+    {
+      "due_date": "2026-10-16",
+      "days_to_maturity": 148,
+      "call": "J",
+      "put": "V",
+      "strikes": [
+        {
+          "strike": 12.73,
+          "call": {
+            "symbol": "STBPJ13",
+            "open": 0,
+            "high": 0,
+            "low": 0,
+            "close": 0,
+            "bid": 0,
+            "ask": 0,
+            "volume": 0,
+            "financial_volume": 0,
+            "variation": 0,
+            "maturity_type": "AMERICAN",
+            "contract_size": 100,
+            "market_maker": false,
+            "time": "2026-03-16T20:30:00.000Z",
+            "category": "CALL",
+            "strike": 12.73,
+            "bs": {
+              "moneyness": "OTM",
+              "price": 0,
+              "delta": 0,
+              "gamma": 0,
+              "vega": 0,
+              "theta": 0,
+              "rho": 0,
+              "volatility": 0,
+              "poe": 0
+            }
+          },
+          "put": {
+            "symbol": "STBPV13",
+            "open": 0,
+            "high": 0,
+            "low": 0,
+            "close": 0,
+            "bid": 0,
+            "ask": 0,
+            "volume": 0,
+            "financial_volume": 0,
+            "variation": 0,
+            "maturity_type": "EUROPEAN",
+            "contract_size": 100,
+            "market_maker": false,
+            "time": "2026-03-16T20:30:00.000Z",
+            "category": "PUT",
+            "strike": 12.73,
+            "bs": {
+              "moneyness": "ITM",
+              "price": 11.6634,
+              "delta": -1,
+              "gamma": 0,
+              "vega": 0,
+              "theta": 0.0068962006740507075,
+              "rho": -0.06849922261505871,
+              "volatility": 0,
+              "poe": 100
+            }
+          }
+        }
+      ]
+    },
+    {
+      "due_date": "2026-11-19",
+      "days_to_maturity": 171,
+      "call": "K",
+      "put": "W",
+      "strikes": [
+        {
+          "strike": 12.73,
+          "call": {
+            "symbol": "STBPK13",
+            "open": 0,
+            "high": 0,
+            "low": 0,
+            "close": 0,
+            "bid": 0,
+            "ask": 0,
+            "volume": 0,
+            "financial_volume": 0,
+            "variation": 0,
+            "maturity_type": "AMERICAN",
+            "contract_size": 100,
+            "market_maker": false,
+            "time": "2026-03-16T20:30:00.000Z",
+            "category": "CALL",
+            "strike": 12.73,
+            "bs": {
+              "moneyness": "OTM",
+              "price": 0,
+              "delta": 0,
+              "gamma": 0,
+              "vega": 0,
+              "theta": 0,
+              "rho": 0,
+              "volatility": 0,
+              "poe": 0
+            }
+          },
+          "put": {
+            "symbol": "STBPW13",
+            "open": 0,
+            "high": 0,
+            "low": 0,
+            "close": 0,
+            "bid": 0,
+            "ask": 0,
+            "volume": 0,
+            "financial_volume": 0,
+            "variation": 0,
+            "maturity_type": "EUROPEAN",
+            "contract_size": 100,
+            "market_maker": false,
+            "time": "2026-03-16T20:30:00.000Z",
+            "category": "PUT",
+            "strike": 12.73,
+            "bs": {
+              "moneyness": "ITM",
+              "price": 11.5058,
+              "delta": -1,
+              "gamma": 0,
+              "vega": 0,
+              "theta": 0.006803053476147005,
+              "rho": -0.07807526239539345,
+              "volatility": 0,
+              "poe": 100
+            }
+          }
+        }
+      ]
+    },
+    {
+      "due_date": "2026-12-18",
+      "days_to_maturity": 192,
+      "call": "L",
+      "put": "X",
+      "strikes": [
+        {
+          "strike": 12.73,
+          "call": {
+            "symbol": "STBPL13",
+            "open": 0,
+            "high": 0,
+            "low": 0,
+            "close": 0,
+            "bid": 0,
+            "ask": 0,
+            "volume": 0,
+            "financial_volume": 0,
+            "variation": 0,
+            "maturity_type": "AMERICAN",
+            "contract_size": 100,
+            "market_maker": false,
+            "time": "2026-03-16T20:30:00.000Z",
+            "category": "CALL",
+            "strike": 12.73,
+            "bs": {
+              "moneyness": "OTM",
+              "price": 0,
+              "delta": 0,
+              "gamma": 0,
+              "vega": 0,
+              "theta": 0,
+              "rho": 0,
+              "volatility": 0,
+              "poe": 0
+            }
+          },
+          "put": {
+            "symbol": "STBPX13",
+            "open": 0,
+            "high": 0,
+            "low": 0,
+            "close": 0,
+            "bid": 0,
+            "ask": 0,
+            "volume": 0,
+            "financial_volume": 0,
+            "variation": 0,
+            "maturity_type": "EUROPEAN",
+            "contract_size": 100,
+            "market_maker": false,
+            "time": "2026-03-16T20:30:00.000Z",
+            "category": "PUT",
+            "strike": 12.73,
+            "bs": {
+              "moneyness": "ITM",
+              "price": 11.3639,
+              "delta": -1,
+              "gamma": 0,
+              "vega": 0,
+              "theta": 0.006719103823229147,
+              "rho": -0.08658176759773327,
+              "volatility": 0,
+              "poe": 100
+            }
+          }
+        }
+      ]
+    },
+    {
+      "due_date": "2027-01-15",
+      "days_to_maturity": 208,
+      "call": "A",
+      "put": "M",
+      "strikes": [
+        {
+          "strike": 12.73,
+          "call": {
+            "symbol": "STBPA13",
+            "open": 0,
+            "high": 0,
+            "low": 0,
+            "close": 0,
+            "bid": 0,
+            "ask": 0,
+            "volume": 0,
+            "financial_volume": 0,
+            "variation": 0,
+            "maturity_type": "AMERICAN",
+            "contract_size": 100,
+            "market_maker": false,
+            "time": "2026-03-16T20:30:00.000Z",
+            "category": "CALL",
+            "strike": 12.73,
+            "bs": {
+              "moneyness": "OTM",
+              "price": 0,
+              "delta": 0,
+              "gamma": 0,
+              "vega": 0,
+              "theta": 0,
+              "rho": 0,
+              "volatility": 0,
+              "poe": 0
+            }
+          },
+          "put": {
+            "symbol": "STBPM13",
+            "open": 0,
+            "high": 0,
+            "low": 0,
+            "close": 0,
+            "bid": 0,
+            "ask": 0,
+            "volume": 0,
+            "financial_volume": 0,
+            "variation": 0,
+            "maturity_type": "EUROPEAN",
+            "contract_size": 100,
+            "market_maker": false,
+            "time": "2026-03-16T20:30:00.000Z",
+            "category": "PUT",
+            "strike": 12.73,
+            "bs": {
+              "moneyness": "ITM",
+              "price": 11.2569,
+              "delta": -1,
+              "gamma": 0,
+              "vega": 0,
+              "theta": 0.006655838756921562,
+              "rho": -0.09291374189910004,
+              "volatility": 0,
+              "poe": 100
+            }
+          }
+        }
+      ]
+    },
+    {
+      "due_date": "2027-02-19",
+      "days_to_maturity": 233,
+      "call": "B",
+      "put": "N",
+      "strikes": [
+        {
+          "strike": 12.73,
+          "call": {
+            "symbol": "STBPB129",
+            "open": 0,
+            "high": 0,
+            "low": 0,
+            "close": 0,
+            "bid": 0,
+            "ask": 0,
+            "volume": 0,
+            "financial_volume": 0,
+            "variation": 0,
+            "maturity_type": "AMERICAN",
+            "contract_size": 100,
+            "market_maker": false,
+            "time": "2026-03-16T20:30:00.000Z",
+            "category": "CALL",
+            "strike": 12.73,
+            "bs": {
+              "moneyness": "OTM",
+              "price": 0,
+              "delta": 0,
+              "gamma": 0,
+              "vega": 0,
+              "theta": 0,
+              "rho": 0,
+              "volatility": 0,
+              "poe": 0
+            }
+          },
+          "put": {
+            "symbol": "STBPN129",
+            "open": 0,
+            "high": 0,
+            "low": 0,
+            "close": 0,
+            "bid": 0,
+            "ask": 0,
+            "volume": 0,
+            "financial_volume": 0,
+            "variation": 0,
+            "maturity_type": "EUROPEAN",
+            "contract_size": 100,
+            "market_maker": false,
+            "time": "2026-03-16T20:30:00.000Z",
+            "category": "PUT",
+            "strike": 12.73,
+            "bs": {
+              "moneyness": "ITM",
+              "price": 11.0917,
+              "delta": -1,
+              "gamma": 0,
+              "vega": 0,
+              "theta": 0.00655817776080865,
+              "rho": -0.10255403555091235,
+              "volatility": 0,
+              "poe": 100
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "ts": "16/03/2026, 19:35:17",
+  "tsMs": 1773689717000,
+  "v": "2-storage",
+  "expiresIn": 52483000,
+  "expiresAt": "17/03/2026, 10:10:00",
+  "stale": false,
+  "age": 127
+}

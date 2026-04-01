@@ -8,9 +8,10 @@ from io import BytesIO
 import os
 
 warnings.filterwarnings('ignore')
-sns.set_theme(style="whitegrid")
+sns.set_theme(style="white")
 
 ARQUIVO_METAS = "metas.json"
+
 
 def carregar_metas(ativos_da_carteira):
     if os.path.exists(ARQUIVO_METAS):
@@ -22,6 +23,7 @@ def carregar_metas(ativos_da_carteira):
             json.dump(metas_padrao, f, indent=4)
         return metas_padrao
 
+
 def agrupandoCarteira(arquivo):
     if not os.path.exists(arquivo):
         print(f"Erro: Arquivo '{arquivo}' não encontrado.")
@@ -32,183 +34,333 @@ def agrupandoCarteira(arquivo):
     for aba in df_excel.sheet_names:
         df_temp = pd.read_excel(arquivo, sheet_name=aba).dropna()
         if not df_temp.empty:
-            df_temp['Produto'] = df_temp['Produto'].astype(str).map(lambda x: x.split(' -')[0].strip())
+            df_temp['Produto'] = df_temp['Produto'].astype(
+                str).map(lambda x: x.split(' -')[0].strip())
             df_temp['Tipo'] = aba.strip()
             tabelas.append(df_temp)
 
     df_total = pd.concat(tabelas, ignore_index=True)
     tipos_validos = ['Fundo de Investimento', 'Tesouro Direto']
-    df_total.loc[~df_total['Tipo'].isin(tipos_validos), 'Tipo'] = 'Acoes'
-    df_total = df_total[df_total['Produto'] != 'Opção de Venda']
+    df_total.loc[~df_total['Tipo'].isin(tipos_validos), 'Tipo'] = 'Ações'
 
-    df_total = df_total.groupby(['Tipo', 'Produto'], as_index=False).agg({'Valor Atualizado': 'sum'})
-
+    df_total = df_total.groupby(['Tipo', 'Produto'], as_index=False).agg({
+        'Valor Atualizado': 'sum'})
     total_geral = df_total['Valor Atualizado'].sum()
     df_total['(%) Atual'] = (df_total['Valor Atualizado'] / total_geral)
-    
+
     metas_dic = carregar_metas(df_total['Produto'].unique())
     metas_upper = {k.upper(): v for k, v in metas_dic.items()}
-    df_total['(%) Meta'] = df_total['Produto'].str.upper().map(metas_upper).fillna(0)
-    
-    df_total = df_total.sort_values(by=['Tipo', '(%) Atual'], ascending=[True, False])
-    return df_total.set_index('Produto')
+    df_total['(%) Meta'] = df_total['Produto'].str.upper().map(
+        metas_upper).fillna(0)
 
-def gerar_grafico_com_labels(df, coluna_x, titulo):
-    # Cálculo do percentual para os labels
-    total = df["Valor Atualizado"].sum()
-    df_plot = df.reset_index().copy().sort_values("Valor Atualizado", ascending=False)
-    df_plot["Percentual"] = (df_plot["Valor Atualizado"] / total) * 100
+    return df_total.sort_values(by=['Tipo', '(%) Atual'], ascending=[True, False])
 
-    plt.figure(figsize=(8, 4.5))
-    ax = sns.barplot(data=df_plot, x=coluna_x, y="Valor Atualizado", color="#2c3e50")
-    
-    # Adicionando os rótulos de porcentagem no topo de cada barra
-    for i, p in enumerate(ax.patches):
-        percentage = df_plot["Percentual"].iloc[i]
-        ax.annotate(f"{percentage:.1f}%", 
-                    (p.get_x() + p.get_width() / 2., p.get_height()), 
-                    ha='center', va='bottom', 
-                    fontsize=10, fontweight='bold', color='black', xytext=(0, 5),
-                    textcoords='offset points')
 
-    plt.title(titulo, fontsize=13, fontweight='bold', pad=20)
-    plt.xticks(rotation=30, ha="right", fontsize=9)
-    plt.yticks(fontsize=9)
-    plt.xlabel(""); plt.ylabel("Valor Atualizado (R$)")
-    
-    # Aumentar o limite superior do eixo Y para o label não cortar
-    ax.set_ylim(0, ax.get_ylim()[1] * 1.15)
-    
+def gerar_grafico_comparativo(df):
+    df_plot = df.melt(id_vars='Produto', value_vars=['(%) Atual', '(%) Meta'],
+                      var_name='Tipo_Perc', value_name='Valor')
+    df_plot['Valor'] = df_plot['Valor'] * 100
+
+    plt.figure(figsize=(12, 6))
+    ax = sns.barplot(data=df_plot, x='Produto', y='Valor',
+                     hue='Tipo_Perc', palette=['#34495e', '#3498db'])
+
+    plt.title("Comparativo: Atual vs Meta (%)",
+              fontsize=14, fontweight='bold', pad=20)
+    plt.xticks(rotation=45, ha="right", fontsize=9)
+    plt.ylabel("Percentual (%)")
+    plt.xlabel("")
+    plt.legend(title="")
     sns.despine()
     plt.tight_layout()
-    
+
     buffer = BytesIO()
-    plt.savefig(buffer, format="png", dpi=120)
+    plt.savefig(buffer, format="png", dpi=100)
     plt.close()
     return base64.b64encode(buffer.getvalue()).decode("utf-8")
 
-def gerar_relatorio_html(df, arquivo_saida="relatorio_carteira.html"):
-    if df.empty: return
 
-    imagens = []
-    # Gráfico Geral (Classes)
-    df_tipo = df.groupby("Tipo", as_index=False)["Valor Atualizado"].sum()
-    imagens.append(gerar_grafico_com_labels(df_tipo, "Tipo", "Distribuição por Classe (%)"))
-    
-    # Gráficos por Tipo
-    for tipo in df['Tipo'].unique():
-        df_sub = df[df["Tipo"] == tipo]
-        imagens.append(gerar_grafico_com_labels(df_sub, "Produto", f"Composição: {tipo} (%)"))
+def gerar_relatorio_html(df, arquivo_saida="dashboard_investimentos.html"):
+    if df.empty:
+        return
+
+    grafico_comp = gerar_grafico_comparativo(df)
+    total_valor = df['Valor Atualizado'].sum()
+    total_ativos = len(df)
 
     linhas_html = ""
-    for idx, row in df.iterrows():
+    for _, row in df.iterrows():
         p_atual = row['(%) Atual'] * 100
         p_meta = row['(%) Meta'] * 100
-        falta = p_meta - p_atual
+        aporte = ((p_meta / 100) * total_valor) - row['Valor Atualizado']
+
+        margem = p_meta * 0.1
+        if p_atual < (p_meta - margem):
+            status, color = "COMPRAR", "#27ae60"
+        elif p_atual > (p_meta + margem):
+            status, color = "REDUZIR", "#e67e22"
+        else:
+            status, color = "AGUARDAR", "#7f8c8d"
+
         linhas_html += f"""
-        <tr class="asset-row" data-atual="{p_atual:.4f}">
-            <td style="text-align: left;">{idx}</td>
-            <td>R$ {row['Valor Atualizado']:,.2f}</td>
-            <td>{p_atual:.2f}%</td>
-            <td><input type="number" step="0.01" class="meta-input" data-ativo="{idx}" value="{p_meta:.2f}">%</td>
-            <td class="col-falta" style="color: {'green' if falta > 0 else 'red'}">{falta:+.2f}%</td>
+        <tr class="asset-row" data-tipo="{row['Tipo']}" data-valor-atual="{row['Valor Atualizado']:.2f}">
+            <td><a href="javascript:void(0)" onclick="abrirGraficoSuspenso(event, '{row['Produto']}')" style="color:#3498db; font-weight:bold; cursor:pointer; text-decoration:none;">{row['Produto']}</a></td>
+            <td><span class="type-badge">{row['Tipo']}</span></td>
+            <td data-order="{row['Valor Atualizado']}">R$ {row['Valor Atualizado']:,.2f}</td>
+            <td data-order="{p_atual}">{p_atual:.2f}%</td>
+            <td><input type="number" step="0.01" class="meta-input" data-ativo="{row['Produto']}" value="{p_meta:.2f}">%</td>
+            <td class="col-aporte" data-order="{aporte}" style="font-weight: bold;">R$ {aporte:,.2f}</td>
+            <td><span class="status-badge" style="background: {color}">{status}</span></td>
         </tr>
         """
-
-    total_valor = df['Valor Atualizado'].sum()
-    total_meta = df['(%) Meta'].sum() * 100
 
     html_content = f"""
     <!DOCTYPE html>
     <html lang="pt-br">
     <head>
         <meta charset="utf-8">
+        <title>Dashboard de Rebalanceamento</title>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+        <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+        <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+        
         <style>
-            body {{ font-family: 'Segoe UI', sans-serif; margin: 20px; font-size: 12px; color: #333; }}
-            .container {{ width: 90%; margin: auto; }}
-            h2 {{ text-align: center; color: #2c3e50; margin-bottom: 20px; }}
+            :root {{ --primary: #2c3e50; --secondary: #3498db; --bg: #f8f9fa; --text-muted: #718096; }}
+            body {{ font-family: 'Inter', sans-serif; background-color: var(--bg); margin: 0; padding: 20px; color: #2d3436; }}
+            .container {{ max-width: 1300px; margin: auto; }}
+            .header {{ display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }}
+            .summary-grid {{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 30px; }}
+            .card {{ background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); border: 1px solid #edf2f7; }}
+            .card h3 {{ margin: 0; font-size: 14px; color: var(--text-muted); text-transform: uppercase; }}
+            .card p {{ margin: 10px 0 0; font-size: 24px; font-weight: 700; color: var(--primary); }}
             
-            table {{ width: 80%; margin: 0 auto 30px auto; border-collapse: collapse; background: #fff; }}
-            th, td {{ border: 1px solid #ddd; padding: 8px; text-align: center; }}
-            th {{ background: #2c3e50; color: white; }}
+            /* TABELA E CONTEÚDO PRINCIPAL */
+            .main-content {{ background: white; padding: 25px; border-radius: 16px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }}
+            table.dataTable {{ border: none !important; margin-top: 20px !important; }}
+            .meta-input {{ width: 60px; padding: 5px; border: 1px solid #e2e8f0; border-radius: 6px; text-align: center; font-weight: 600; }}
+            .type-badge {{ background: #edf2f7; padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 600; color: #4a5568; }}
+            .status-badge {{ color: white; padding: 5px 10px; border-radius: 20px; font-size: 10px; font-weight: 800; }}
             
-            .footer-total {{ font-weight: bold; background: #f2f2f2; }}
-            .meta-input {{ width: 60px; padding: 3px; border: 1px solid #ccc; text-align: center; border-radius: 3px; }}
-            
-            .charts-grid {{ 
-                display: grid; 
-                grid-template-columns: 1fr 1fr; 
-                gap: 25px; 
+            /* BOTÕES DE FILTRO BONITOS */
+            .filter-group {{ margin-bottom: 25px; display: flex; gap: 10px; border-bottom: 1px solid #edf2f7; padding-bottom: 15px; }}
+            .btn-filter {{ 
+                background: #fff; 
+                border: 1px solid #e2e8f0; 
+                padding: 8px 18px; 
+                border-radius: 8px; 
+                cursor: pointer; 
+                font-size: 14px; 
+                font-weight: 500;
+                color: var(--text-muted);
+                transition: all 0.2s ease;
             }}
-            .chart-card {{ border: 1px solid #eee; padding: 10px; border-radius: 5px; background: #fff; }}
-            .chart-card img {{ width: 100%; height: auto; }}
-            
-            .no-print {{ text-align: center; margin-bottom: 30px; }}
-            .btn {{ background: #2c3e50; color: white; border: none; padding: 10px 25px; cursor: pointer; border-radius: 5px; font-weight: bold; font-size: 13px; }}
-            .btn:hover {{ background: #34495e; }}
+            .btn-filter:hover {{ background: #f7fafc; border-color: #cbd5e0; }}
+            .btn-filter.active {{ 
+                background: var(--secondary); 
+                color: white; 
+                border-color: var(--secondary);
+                box-shadow: 0 4px 12px rgba(52, 152, 219, 0.2);
+            }}
 
-            @media print {{
-                .no-print {{ display: none; }}
-                .container, table {{ width: 100%; }}
-                .charts-grid {{ gap: 10px; }}
-                body {{ margin: 0; }}
+            /* BOTÕES DE AÇÃO */
+            .btn {{ background: var(--primary); color: white; border: none; padding: 10px 18px; cursor: pointer; border-radius: 8px; font-weight: 600; font-size: 14px; transition: 0.2s; }}
+            .btn-save {{ background: var(--secondary); }}
+            
+            /* GRÁFICO SUSPENSO */
+            #floating-chart-container {{
+                display: none;
+                position: absolute;
+                z-index: 9999;
+                width: 700px;
+                height: 450px;
+                background: white;
+                border-radius: 12px;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+                border: 1px solid #edf2f7;
+                padding: 12px;
+            }}
+            .close-chart {{
+                position: absolute;
+                top: -12px;
+                right: -12px;
+                width: 30px;
+                height: 30px;
+                background: #e74c3c;
+                color: white;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                font-weight: bold;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             }}
         </style>
     </head>
     <body>
         <div class="container">
-            <h2>Relatório de Rebalanceamento de Carteira</h2>
-            
-            <div class="no-print">
-                <button class="btn" onclick="salvarMetas()">💾 Salvar metas.json</button>
-                <button class="btn" onclick="window.print()">🖨️ Imprimir / PDF</button>
+            <div class="header">
+                <h1>Dashboard de Carteira</h1>
+                <div class="no-print">
+                    <button class="btn btn-save" onclick="salvarMetas()">💾 Salvar Metas</button>
+                    <button class="btn" onclick="window.print()">🖨️ Exportar PDF</button>
+                </div>
             </div>
 
-            <table>
-                <thead>
-                    <tr><th style="text-align: left;">Ativo</th><th>Valor Atual</th><th>% Atual</th><th>% Meta</th><th>Falta</th></tr>
-                </thead>
-                <tbody>{linhas_html}</tbody>
-                <tfoot>
-                    <tr class="footer-total">
-                        <td style="text-align: left;">TOTAL GERAL</td>
-                        <td>R$ {total_valor:,.2f}</td>
-                        <td>100.00%</td>
-                        <td id="total-meta">{total_meta:.2f}%</td>
-                        <td id="total-falta">{(total_meta - 100):+.2f}%</td>
-                    </tr>
-                </tfoot>
-            </table>
+            <div class="summary-grid">
+                <div class="card"><h3>Patrimônio Total</h3><p>R$ {total_valor:,.2f}</p></div>
+                <div class="card"><h3>Ativos Monitorados</h3><p>{total_ativos}</p></div>
+                <div class="card"><h3>Status Geral</h3><p id="total-meta-info">Carregando...</p></div>
+            </div>
 
-            <div class="charts-grid">
-                {"".join([f'<div class="chart-card"><img src="data:image/png;base64,{img}"></div>' for img in imagens])}
+            <div class="main-content">
+                <div class="filter-group">
+                    <button class="btn-filter active" onclick="filtrar('Tudo', this)">Todos ativos</button>
+                    <button class="btn-filter" onclick="filtrar('Ações', this)">Ações</button>
+                    <button class="btn-filter" onclick="filtrar('Fundo de Investimento', this)">Fundos</button>
+                    <button class="btn-filter" onclick="filtrar('Tesouro Direto', this)">Renda Fixa</button>
+                </div>
+                
+                <table id="portfolioTable" class="display compact borderless">
+                    <thead>
+                        <tr>
+                            <th>Produto</th>
+                            <th>Classe</th>
+                            <th>Valor Atual</th>
+                            <th>% Atual</th>
+                            <th>% Meta</th>
+                            <th>Aporte Necessário</th>
+                            <th>Sugestão</th>
+                        </tr>
+                    </thead>
+                    <tbody>{linhas_html}</tbody>
+                </table>
+            </div>
+
+            <div class="chart-section" style="margin-top: 30px; display: flex; justify-content: center;">
+                <div class="card" style="width: 100%; text-align: center;">
+                    <h3>Distribuição Atual vs Meta</h3>
+                    <img src="data:image/png;base64,{grafico_comp}" style="max-width: 100%;">
+                </div>
             </div>
         </div>
 
+        <div id="floating-chart-container">
+            <div class="close-chart" onclick="fecharGrafico()">&times;</div>
+            <div id="tv-chart-inner" style="height: 100%; width: 100%;"></div>
+        </div>
+
         <script>
-            function recalcular() {{
-                let somaMeta = 0;
-                document.querySelectorAll('.asset-row').forEach(row => {{
-                    const input = row.querySelector('.meta-input');
-                    const colFalta = row.querySelector('.col-falta');
-                    const meta = parseFloat(input.value) || 0;
-                    const atual = parseFloat(row.dataset.atual);
-                    const falta = meta - atual;
-                    somaMeta += meta;
-                    colFalta.innerText = (falta >= 0 ? '+' : '') + falta.toFixed(2) + '%';
-                    colFalta.style.color = falta >= 0 ? 'green' : 'red';
+            let table;
+            
+            function abrirGraficoSuspenso(event, ticker) {{
+                const container = document.getElementById('floating-chart-container');
+                const inner = document.getElementById('tv-chart-inner');
+                
+                let posX = event.pageX + 15;
+                let posY = event.pageY + 15;
+
+                // Evitar que o gráfico saia da tela à direita
+                if (posX + 720 > window.innerWidth) posX = window.innerWidth - 750;
+                
+                container.style.display = 'block';
+                container.style.left = posX + 'px';
+                container.style.top = posY + 'px';
+                
+                inner.innerHTML = "";
+
+                let symbol = ticker.includes(":") ? ticker : "BMFBOVESPA:" + ticker;
+
+                new TradingView.widget({{
+                    "autosize": true,
+                    "symbol": symbol,
+                    "interval": "D",
+                    "timezone": "Etc/UTC",
+                    "theme": "light",
+                    "style": "3", // Estilo Área
+                    "locale": "br",
+                    "container_id": "tv-chart-inner",
+                    "enable_publishing": false,
+                    "hide_top_toolbar": false,
+                    "hide_legend": false,
+                    "save_image": false,
+                    "range": "60M",
+                    "studies": [
+                        "STD;Stochastic"
+                    ],
+                    
+
                 }});
-                const totalFalta = somaMeta - 100;
-                document.getElementById('total-meta').innerText = somaMeta.toFixed(2) + '%';
-                document.getElementById('total-falta').innerText = (totalFalta >= 0 ? '+' : '') + totalFalta.toFixed(2) + '%';
-                document.getElementById('total-falta').style.color = Math.abs(totalFalta) < 0.01 ? 'black' : (totalFalta > 0 ? 'green' : 'red');
+                
+                event.stopPropagation();
             }}
 
-            document.querySelectorAll('.meta-input').forEach(i => i.addEventListener('input', recalcular));
+            function fecharGrafico() {{
+                document.getElementById('floating-chart-container').style.display = 'none';
+            }}
+
+            document.addEventListener('click', function(e) {{
+                const container = document.getElementById('floating-chart-container');
+                if (!container.contains(e.target) && container.style.display === 'block') {{
+                    fecharGrafico();
+                }}
+            }});
+
+            $(document).ready(function() {{
+                table = $('#portfolioTable').DataTable({{
+                    paging: false,
+                    info: false,
+                    language: {{ search: "" , searchPlaceholder: "Buscar ativo..." }},
+                    columnDefs: [{{ targets: [2, 3, 5], className: 'dt-right' }}]
+                }});
+                recalcular();
+            }});
+
+            function filtrar(tipo, btn) {{
+                $('.btn-filter').removeClass('active');
+                $(btn).addClass('active');
+                if(tipo === 'Tudo') table.column(1).search('').draw();
+                else table.column(1).search(tipo).draw();
+            }}
+
+            function recalcular() {{
+                let totalGeral = 0;
+                $('.asset-row').each(function() {{ 
+                    totalGeral += parseFloat($(this).attr('data-valor-atual')) || 0; 
+                }});
+                
+                let somaMeta = 0;
+                $('.asset-row').each(function() {{
+                    const row = $(this);
+                    const metaPerc = parseFloat(row.find('.meta-input').val()) || 0;
+                    const valorAtual = parseFloat(row.attr('data-valor-atual'));
+                    const percAtual = (valorAtual / totalGeral) * 100;
+                    
+                    somaMeta += metaPerc;
+                    const aporte = ((metaPerc / 100) * totalGeral) - valorAtual;
+                    
+                    const colAporte = row.find('.col-aporte');
+                    colAporte.text('R$ ' + aporte.toLocaleString('pt-BR', {{minimumFractionDigits: 2}}));
+                    colAporte.css('color', aporte >= 0 ? '#27ae60' : '#e74c3c');
+
+                    const badge = row.find('.status-badge');
+                    const margem = metaPerc * 0.1;
+                    if (percAtual < (metaPerc - margem)) {{ badge.text('COMPRAR').css('background', '#27ae60'); }}
+                    else if (percAtual > (metaPerc + margem)) {{ badge.text('REDUZIR').css('background', '#e67e22'); }}
+                    else {{ badge.text('AGUARDAR').css('background', '#7f8c8d'); }}
+                }});
+                
+                $('#total-meta-info').text(somaMeta.toFixed(1) + '% Alocado');
+                $('#total-meta-info').css('color', Math.abs(somaMeta-100) > 0.1 ? '#e67e22' : '#27ae60');
+            }}
+
+            $('.meta-input').on('input', recalcular);
 
             function salvarMetas() {{
                 const metas = {{}};
-                document.querySelectorAll('.meta-input').forEach(i => metas[i.dataset.ativo] = parseFloat(i.value) / 100);
+                $('.meta-input').each(function() {{ metas[$(this).data('ativo')] = parseFloat($(this).val()) / 100; }});
                 const blob = new Blob([JSON.stringify(metas, null, 4)], {{ type: 'application/json' }});
                 const a = document.createElement('a');
                 a.href = URL.createObjectURL(blob);
@@ -221,7 +373,8 @@ def gerar_relatorio_html(df, arquivo_saida="relatorio_carteira.html"):
     """
     with open(arquivo_saida, "w", encoding="utf-8") as f:
         f.write(html_content)
-    print(f"Relatório gerado com sucesso!")
+    print(f"Sucesso! Dashboard gerado em: {{os.path.abspath(arquivo_saida)}}")
+
 
 if __name__ == "__main__":
     df_final = agrupandoCarteira("posicao.xlsx")
